@@ -1,0 +1,50 @@
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+// gradle
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+// project
+group 'com'
+bootJar { enabled = false }
+jar { enabled = false }
+springBoot {
+    mainClassName = 'com.ApplicationLauncher'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = sourceCompatibility
+
+    repositories {
+        // public dependencies
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE")
+        }
+    }
+
+    dependencies {
+        implementation('org.springframework.boot:spring-boot-starter')
+        implementation('org.springframework.boot:spring-boot-starter-data-r2dbc:2.3.0.RELEASE')
+        implementation('io.r2dbc:r2dbc-h2')
+        implementation('io.r2dbc:r2dbc-pool')
+    }
+}
