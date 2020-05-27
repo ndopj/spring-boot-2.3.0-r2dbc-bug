@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS model (id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+                                  name VARCHAR(256));
