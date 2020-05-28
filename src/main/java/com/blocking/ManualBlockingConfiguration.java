@@ -1,6 +1,7 @@
 package com.blocking;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -43,6 +44,7 @@ public class ManualBlockingConfiguration {
     @ConfigurationProperties("spring.datasource.configuration")
     public DataSource dataSource(@Qualifier("blockingDataSourceProperties")
                                          DataSourceProperties blockingDataSourceProperties) {
+        LoggerFactory.getLogger(this.getClass()).info("[blocking data config] blocking datasource init");
         return blockingDataSourceProperties.initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
                 .build();
@@ -53,6 +55,7 @@ public class ManualBlockingConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder,
             @Qualifier("blockingDataSource") DataSource blockingDataSource) {
+        LoggerFactory.getLogger(this.getClass()).info("[blocking data config] blocking entity manager factory init");
         return builder
                 .dataSource(blockingDataSource)
                 .packages(BlockingModel.class)
@@ -66,6 +69,7 @@ public class ManualBlockingConfiguration {
     public PlatformTransactionManager transactionManager(
             @Qualifier("blockingEntityManagerFactory")
                     EntityManagerFactory blockingEntityManagerFactory) {
+        LoggerFactory.getLogger(this.getClass()).info("[blocking data config] blocking transaction manager factory init");
         return new JpaTransactionManager(blockingEntityManagerFactory);
     }
 

@@ -17,7 +17,7 @@ public class ApplicationLauncher {
         SpringApplication.run(ApplicationLauncher.class, args);
     }
 
-    @RestController
+    /*@RestController
     @RequestMapping("/")
     public class Root {
 
@@ -27,5 +27,5 @@ public class ApplicationLauncher {
         public Mono<ReactiveModel> getSaved() {
             return reactiveService.getSaved();
         }
-    }
+    }*/
 }

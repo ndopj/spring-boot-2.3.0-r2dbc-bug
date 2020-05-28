@@ -1,15 +1,26 @@
 package com.reactive;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import javax.annotation.PostConstruct;
 
 @Service
 public class ReactiveService {
 
-    @Autowired private ReactiveRepository reactiveRepository;
+    private final ReactiveRepository reactiveRepository;
+
+    public ReactiveService(ReactiveRepository reactiveRepository) {this.reactiveRepository = reactiveRepository;}
 
     public Mono<ReactiveModel> getSaved() {
         return reactiveRepository.save(new ReactiveModel());
+    }
+
+    @PostConstruct
+    void init() {
+        reactiveRepository.save(new ReactiveModel())
+                .subscribe(reactiveModel -> LoggerFactory.getLogger(this.getClass())
+                        .info("Saved reactive model with ID {}", reactiveModel.getId()));
     }
 }

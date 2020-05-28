@@ -1,7 +1,6 @@
 package com.blocking;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -9,8 +8,9 @@ import javax.annotation.PostConstruct;
 @Service
 public class BlockingService {
 
-    @Autowired
-    private BlockingRepository blockingRepository;
+    private final BlockingRepository blockingRepository;
+
+    public BlockingService(BlockingRepository blockingRepository) {this.blockingRepository = blockingRepository;}
 
     @PostConstruct
     void init() {
