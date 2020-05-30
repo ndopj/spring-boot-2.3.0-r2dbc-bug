@@ -45,7 +45,7 @@ public class ManualReactiveConfiguration extends AbstractR2dbcConfiguration {
     }
 
     @Primary
-    @Bean
+    @Bean("reactiveTransactionManager")
     ReactiveTransactionManager transactionManager(ConnectionFactory reactiveConnectionFactory) {
         LoggerFactory.getLogger(this.getClass()).info("[reactive data config] reactive transaction manager init");
         return new R2dbcTransactionManager(reactiveConnectionFactory);
